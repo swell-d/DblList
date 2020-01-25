@@ -1,15 +1,15 @@
 class DblList {
-    private Element lastElement = new Element(null, null, null);
-    private Element currentElement = new Element(null,null,null);
+    private Element lastElement = null;
+    private Element currentElement = null;
 
     void add(String text) {
         Element newElement = new Element(lastElement, text, null);
-        lastElement.next = newElement;
+        if (lastElement != null) lastElement.next = newElement;
         lastElement = newElement;
-        if (currentElement.next == null) currentElement.next = newElement;
+        if (currentElement == null) currentElement = new Element(null, null, newElement);
     }
 
-    String nextElement(){
+    String nextElement() {
         return moveTo(currentElement.next);
     }
 
@@ -17,12 +17,9 @@ class DblList {
         return moveTo(currentElement.previous);
     }
 
-    private String moveTo(Element next) {
-        if (next == null) {
-            System.out.println("no more elements");
-            return null;
-        }
-        currentElement = next;
+    private String moveTo(Element element) {
+        if (element == null) throw new IllegalCallerException("End of DblList");
+        currentElement = element;
         return currentElement.value;
     }
 }

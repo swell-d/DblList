@@ -13,19 +13,25 @@ public class Tests {
         assertNull(element1.next);
     }
 
-    @Test
-    public void testDblList(){
+    @Test(expected = IllegalCallerException.class)
+    public void testDblListError1() {
         DblList list1 = new DblList();
         assertNotNull(list1);
         list1.add("1");
         list1.add("2");
-        list1.add("3");
         assertEquals("1", list1.nextElement());
         assertEquals("2", list1.nextElement());
-        assertEquals("3", list1.nextElement());
-        assertNull(list1.nextElement());
-        assertEquals("2", list1.previousElement());
+        list1.nextElement();
+    }
+
+    @Test(expected = IllegalCallerException.class)
+    public void testDblListError2() {
+        DblList list1 = new DblList();
+        list1.add("1");
+        assertEquals("1", list1.nextElement());
+        list1.add("2");
+        assertEquals("2", list1.nextElement());
         assertEquals("1", list1.previousElement());
-        assertNull(list1.previousElement());
+        list1.previousElement();
     }
 }
