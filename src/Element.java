@@ -8,5 +8,4 @@ class Element {
         this.value = value;
         this.next = next;
     }
-
 }
