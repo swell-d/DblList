@@ -7,23 +7,24 @@ class SimpleIterator implements Iterators {
         this.currentElement = null;
     }
 
-    private Element lookForStartPosition() {
-        Element lastElement = this.list.lastElement;
-        if (lastElement == null) throw new IllegalCallerException("Empty List");
-        while (lastElement.previous != null) lastElement = lastElement.previous;
-        return new Element(null, null, lastElement);
-    }
-
     @Override
     public String nextElement() {
-        if (this.currentElement == null) this.currentElement = lookForStartPosition();
+        checkCurrentElement();
         return moveTo(this.currentElement.next);
     }
 
     @Override
     public String previousElement() {
-        if (this.currentElement == null) this.currentElement = lookForStartPosition();
+        checkCurrentElement();
         return moveTo(this.currentElement.previous);
+    }
+
+    private void checkCurrentElement() {
+        if (this.currentElement != null) return;
+        Element lastElement = this.list.lastElement;
+        if (lastElement == null) throw new IllegalCallerException("Empty List");
+        while (lastElement.previous != null) lastElement = lastElement.previous;
+        this.currentElement = new Element(null, null, lastElement);
     }
 
     private String moveTo(Element element) {
