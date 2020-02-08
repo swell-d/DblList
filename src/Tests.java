@@ -2,11 +2,12 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+
 public class Tests {
 
     @Test
-    public void testElemnt() {
-        Element element1 = new Element(null, "test", null);
+    public void testElemnt1() {
+        Element<String> element1 = new Element<>(null, "test", null);
         assertNotNull(element1);
         assertNull(element1.previous);
         assertEquals("test", element1.value);
@@ -14,8 +15,26 @@ public class Tests {
     }
 
     @Test
-    public void testTwoWayList() {
-        TwoWayList list1 = new TwoWayList();
+    public void testElemnt2() {
+        Element<Integer> element1 = new Element<>(null, 42, null);
+        assertNotNull(element1);
+        assertNull(element1.previous);
+        assertEquals((Integer) 42, element1.value);
+        assertNull(element1.next);
+    }
+
+    @Test
+    public void testElemnt3() {
+        Element<Object> element1 = new Element<>(null, 42.42, null);
+        assertNotNull(element1);
+        assertNull(element1.previous);
+        assertEquals(42.42, element1.value);
+        assertNull(element1.next);
+    }
+
+    @Test
+    public void testTwoWayListWithStrings() {
+        TwoWayList<String> list1 = new TwoWayList<>();
         assertNotNull(list1);
         list1.add("1");
         list1.add("2");
@@ -28,9 +47,24 @@ public class Tests {
         assertEquals("3", iterator1.nextElement());
     }
 
+    @Test
+    public void testTwoWayListWithObjects() {
+        TwoWayList<Object> list1 = new TwoWayList<>();
+        assertNotNull(list1);
+        list1.add("1");
+        list1.add(2);
+        Iterators iterator1 = list1.createSimpleIterator();
+        assertEquals("1", iterator1.nextElement());
+        assertEquals(2, iterator1.nextElement());
+        assertEquals("1", iterator1.previousElement());
+        list1.add(42.42);
+        assertEquals(2, iterator1.nextElement());
+        assertEquals(42.42, iterator1.nextElement());
+    }
+
     @Test(expected = IllegalCallerException.class)
     public void testTwoWayListError1() {
-        TwoWayList list1 = new TwoWayList();
+        TwoWayList<String> list1 = new TwoWayList<>();
         assertNotNull(list1);
         list1.add("1");
         list1.add("2");
@@ -42,7 +76,7 @@ public class Tests {
 
     @Test(expected = IllegalCallerException.class)
     public void testTwoWayListError2() {
-        TwoWayList list1 = new TwoWayList();
+        TwoWayList<String> list1 = new TwoWayList<>();
         Iterators iterator1 = list1.createSimpleIterator();
         list1.add("1");
         assertEquals("1", iterator1.nextElement());
@@ -61,9 +95,9 @@ public class Tests {
 
     @Test
     public void test2TwoWayList() {
-        TwoWayList list1 = new TwoWayList();
+        TwoWayList<String> list1 = new TwoWayList<>();
         Iterators iterator1 = list1.createSimpleIterator();
-        TwoWayList list2 = new TwoWayList();
+        TwoWayList<String> list2 = new TwoWayList<>();
         Iterators iterator2 = list2.createSimpleIterator();
         list1.add("1");
         list1.add("2");
@@ -82,7 +116,7 @@ public class Tests {
 
     @Test
     public void testTwoIterators() {
-        TwoWayList list1 = new TwoWayList();
+        TwoWayList<String> list1 = new TwoWayList<>();
         Iterators iterator1 = list1.createSimpleIterator();
         list1.add("1");
         list1.add("2");

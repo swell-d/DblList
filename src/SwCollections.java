@@ -1,6 +1,6 @@
-interface SwCollections {
+interface SwCollections<T> {
 
-    void add(String text);
+    void add(T text);
 
     Iterators createSimpleIterator();
 

@@ -1,7 +1,7 @@
-interface Iterators {
+interface Iterators<T> {
 
-    String nextElement();
+    T nextElement();
 
-    String previousElement();
+    T previousElement();
 
 }
